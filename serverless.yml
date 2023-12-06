@@ -1,0 +1,33 @@
+service: validator-da-tracker
+configValidationMode: off
+provider:
+  name: scaleway
+  runtime: go121 # Available go runtimes are listed in documentation
+  # Global Environment variables - used in every functions
+
+plugins:
+  - serverless-scaleway-functions
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!.gitignore"
+    - "!.git/**"
+
+custom:
+  containers:
+    tracker-server:
+      directory: container
+      memoryLimit: 512
+      minScale: 1
+      maxScale: 1
+      port: 8080
+      secret:
+        DB_HOST: ${env:DB_HOST}
+        DB_PORT: ${env:DB_PORT}
+        DB_USER: ${env:DB_USER}
+        DB_PASS: ${env:DB_PASS}
+        DB_NAME: ${env:DB_NAME}
+        PROMETHEUS_AUTH_TOKEN: ${env:PROMETHEUS_AUTH_TOKEN}
+      env:
+        URL: "https://metrics.cockpit.fr-par.scw.cloud"
