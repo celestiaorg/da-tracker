@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	timeout = time.Second * 30
+	timeout = time.Second * 120
 )
 
 func NewPrometheusClient() *http.Client {

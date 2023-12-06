@@ -36,12 +36,12 @@ func main() {
 	log.Println("PROMETHEUS_URI: ", prometheusEndpoint)
 	log.Println("Starting metrics scraper...")
 	g.Go(func() error {
-		return metrics.StartMetricsScraper(ctx, db, prometheusClient, prometheusEndpoint, token, time.Second*5)
+		return metrics.StartMetricsScraper(ctx, db, prometheusClient, prometheusEndpoint, token, time.Second*30)
 	})
 
 	log.Println("Starting metrics processor...")
 	g.Go(func() error {
-		return metrics.StartMetricsProcessor(ctx, db, prometheusClient, prometheusEndpoint, token, time.Second*5)
+		return metrics.StartMetricsProcessor(ctx, db, prometheusClient, prometheusEndpoint, token, time.Second*30)
 	})
 
 	g.Go(func() error {
