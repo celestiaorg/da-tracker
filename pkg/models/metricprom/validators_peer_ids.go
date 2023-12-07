@@ -3,7 +3,6 @@ package metricprom
 import (
 	"encoding/json"
 	"fmt"
-	// Other necessary imports
 )
 
 // ValidatorsPeerIDs defines the structure of a metric for validators and their peer IDs.

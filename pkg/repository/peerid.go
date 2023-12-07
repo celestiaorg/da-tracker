@@ -3,9 +3,11 @@ package repository
 import (
 	"context"
 	"errors"
-	"github.com/celestiaorg/validator-da-tracker/pkg/models/dbentities"
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
+
+	"github.com/celestiaorg/validator-da-tracker/pkg/models/dbentities"
 )
 
 // PeerIDRepository defines the interface for PeerID data operations.

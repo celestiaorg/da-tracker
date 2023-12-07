@@ -4,8 +4,10 @@ package repository
 
 import (
 	"context"
-	"github.com/celestiaorg/validator-da-tracker/pkg/models/dbentities"
+	
 	"gorm.io/gorm"
+
+	"github.com/celestiaorg/validator-da-tracker/pkg/models/dbentities"
 )
 
 type ValidatorRepository interface {

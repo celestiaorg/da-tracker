@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"errors"
-	"github.com/celestiaorg/validator-da-tracker/pkg/repository"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"net/http"
+
+	"github.com/celestiaorg/validator-da-tracker/pkg/repository"
 )
 
 type ValidatorHandler struct {

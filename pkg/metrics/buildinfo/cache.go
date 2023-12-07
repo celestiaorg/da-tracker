@@ -1,9 +1,10 @@
 package buildinfo
 
 import (
-	"github.com/celestiaorg/validator-da-tracker/pkg/models/metricprom"
 	"sync"
 	"time"
+
+	"github.com/celestiaorg/validator-da-tracker/pkg/models/metricprom"
 )
 
 const (
@@ -41,7 +42,7 @@ func (c *Cache) GetMetrics() []metricprom.BuildInfo {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()
 
-	var metrics []metricprom.BuildInfo
+	metrics := make([]metricprom.BuildInfo, 0, len(c.data))
 	for _, metric := range c.data {
 		metrics = append(metrics, metric)
 	}

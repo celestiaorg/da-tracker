@@ -2,13 +2,15 @@ package metrics
 
 import (
 	"context"
+	"net/http"
+	"time"
+
+	"gorm.io/gorm"
+
 	"github.com/celestiaorg/validator-da-tracker/pkg/metrics/agent"
 	"github.com/celestiaorg/validator-da-tracker/pkg/metrics/buildinfo"
 	"github.com/celestiaorg/validator-da-tracker/pkg/metrics/vpi"
 	"github.com/celestiaorg/validator-da-tracker/pkg/repository"
-	"gorm.io/gorm"
-	"net/http"
-	"time"
 )
 
 const (

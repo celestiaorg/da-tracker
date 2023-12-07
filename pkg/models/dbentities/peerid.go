@@ -1,8 +1,9 @@
 package dbentities
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type PeerIDStatus string

@@ -30,4 +30,4 @@ custom:
         DB_NAME: ${env:DB_NAME}
         PROMETHEUS_AUTH_TOKEN: ${env:PROMETHEUS_AUTH_TOKEN}
       env:
-        URL: "https://metrics.cockpit.fr-par.scw.cloud"
+        PROMETHEUS_URL: "https://metrics.cockpit.fr-par.scw.cloud"

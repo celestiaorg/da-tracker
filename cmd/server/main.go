@@ -2,16 +2,24 @@ package main
 
 import (
 	"context"
+	"log"
+	"time"
+
+	"golang.org/x/sync/errgroup"
+
+	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	"github.com/celestiaorg/validator-da-tracker/config"
 	"github.com/celestiaorg/validator-da-tracker/pkg/database"
 	"github.com/celestiaorg/validator-da-tracker/pkg/handlers"
 	"github.com/celestiaorg/validator-da-tracker/pkg/metrics"
 	"github.com/celestiaorg/validator-da-tracker/pkg/repository"
-	"github.com/gin-gonic/gin"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"golang.org/x/sync/errgroup"
-	"log"
-	"os"
-	"time"
+)
+
+const (
+	scrapeInterval  = time.Second * 30
+	processInterval = time.Second * 30
 )
 
 func main() {
@@ -21,27 +29,29 @@ func main() {
 
 	g, ctx := errgroup.WithContext(ctx)
 
+	// we don't define the file here as it is already defined in the OS env in the CP side
+	// check serverless.yml. You are free to define it here if you want to run it locally
+	cfg := config.LoadEnv()
+
 	log.Println("Initalizing DB...")
-	database.InitDB()      // Initialize the database connection
+	database.InitDB(cfg)   // Initialize the database connection
 	db := database.GetDB() // Get the database instance
 
 	log.Println("Initalizing Validator Repository & Handler...")
 	validatorRepoForHandlers := repository.NewValidatorRepository(db)
 	validatorHandler := handlers.NewValidatorHandler(validatorRepoForHandlers)
 
-	token := os.Getenv("PROMETHEUS_AUTH_TOKEN")
 	prometheusClient := metrics.NewPrometheusClient()
-	prometheusEndpoint := os.Getenv("URL")
 	// Start the metrics scraper with the context
-	log.Println("PROMETHEUS_URI: ", prometheusEndpoint)
+	log.Println("PROMETHEUS_URL: ", cfg.PromURL)
 	log.Println("Starting metrics scraper...")
 	g.Go(func() error {
-		return metrics.StartMetricsScraper(ctx, db, prometheusClient, prometheusEndpoint, token, time.Second*30)
+		return metrics.StartMetricsScraper(ctx, db, prometheusClient, cfg.PromURL, cfg.PromToken, scrapeInterval)
 	})
 
 	log.Println("Starting metrics processor...")
 	g.Go(func() error {
-		return metrics.StartMetricsProcessor(ctx, db, prometheusClient, prometheusEndpoint, token, time.Second*30)
+		return metrics.StartMetricsProcessor(ctx, db, prometheusClient, cfg.PromURL, cfg.PromToken, processInterval)
 	})
 
 	g.Go(func() error {

@@ -2,9 +2,11 @@ package vpi
 
 import (
 	"context"
+
+	"github.com/prometheus/client_golang/prometheus"
+
 	"github.com/celestiaorg/validator-da-tracker/pkg/metrics/agent"
 	"github.com/celestiaorg/validator-da-tracker/pkg/repository"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (

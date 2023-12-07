@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/celestiaorg/validator-da-tracker/pkg/metrics/agent"
 	"github.com/celestiaorg/validator-da-tracker/pkg/models/dbentities"
 	"github.com/celestiaorg/validator-da-tracker/pkg/models/metricprom"
@@ -37,9 +38,7 @@ func (bip *Processor) ProcessBuildInfo(ctx context.Context) error {
 		}
 
 		var buildInfoMetrics []metricprom.BuildInfo
-		for _, result := range response.Data.Result {
-			buildInfoMetrics = append(buildInfoMetrics, result)
-		}
+		buildInfoMetrics = append(buildInfoMetrics, response.Data.Result...)
 
 		bip.buildInfoCache.Update(buildInfoMetrics)
 	}
