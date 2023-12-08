@@ -8,12 +8,7 @@ import (
 )
 
 const (
-	//defaultCacheDuration = 20 * time.Minute
 	defaultCacheDuration = 20 * time.Second
-)
-
-var (
-	cacheDuration = defaultCacheDuration
 )
 
 type Cache struct {
@@ -54,5 +49,5 @@ func (c *Cache) IsStale() bool {
 	defer c.mutex.RUnlock()
 
 	elapsed := time.Since(c.lastUpdate)
-	return elapsed > cacheDuration
+	return elapsed > defaultCacheDuration
 }

@@ -29,7 +29,7 @@ It stores validators' data, peer IDs, and historical statuses, facilitating effi
 
 ### Prerequisites
 
-- Go 1.21
+- Go 1.21.1
 - MySQL
 - Serverless Framework
 

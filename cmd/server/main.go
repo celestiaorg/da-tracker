@@ -20,6 +20,7 @@ import (
 const (
 	scrapeInterval  = time.Second * 30
 	processInterval = time.Second * 30
+	serverPort      = ":8080"
 )
 
 func main() {
@@ -66,7 +67,7 @@ func main() {
 		router.GET("/validators/peerids", validatorHandler.GetValidatorsByPeerIDs())
 		// listen and serve on 0.0.0.0:8080
 		router.GET("/metrics", gin.WrapH(promhttp.Handler()))
-		err := router.Run(":8080")
+		err := router.Run(serverPort)
 		if err != nil {
 			log.Fatalf("Error running router: %v", err)
 			return err
