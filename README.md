@@ -1,8 +1,8 @@
-# DA Checker
+# DA Tracker
 
 ## Introduction
 
-DA Checker is an open source tool designed for monitoring and validating data associated with validators da nodes' metrics. 
+DA Tracker is an open source tool designed for monitoring and validating data associated with validators da nodes' metrics. 
 Uses Go backend, MySQL database, and a serverless deployment model.
 
 ## Features
